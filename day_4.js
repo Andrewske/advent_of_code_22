@@ -12,18 +12,26 @@ const input = file.split(/\r?\n/);
 
 let total = 0;
 
-input.forEach((pair) => {
+input.every((pair) => {
   let [elf1, elf2] = pair
     .split(',')
     .map((x) => x.split('-').map((y) => Number(y)));
 
-  if (elf1[0] <= elf2[0] && elf1[1] >= elf2[1]) {
+  if (elf2.includes(elf1[0]) || elf2.includes(elf1[1])) {
     total += 1;
-    console.log([elf1, elf2]);
-  } else if (elf2[0] <= elf1[0] && elf2[1] >= elf1[1]) {
-    total += 1;
-    console.log([elf1, elf2]);
+    return true;
   }
+
+  if (
+    (elf1[0] >= elf2[0] && elf1[0] <= elf2[1]) ||
+    (elf1[1] >= elf2[0] && elf1[1] <= elf2[1]) ||
+    (elf2[0] >= elf1[0] && elf2[0] <= elf1[1]) ||
+    (elf1[1] >= elf2[0] && elf1[1] <= elf2[1])
+  ) {
+    total += 1;
+  }
+
+  return true;
 });
 
 console.log(total);
