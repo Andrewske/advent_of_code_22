@@ -6,21 +6,21 @@ const input = file.split(/\r?\n/);
 const key = {
   X: {
     points: 1,
-    C: 'win',
-    B: 'lose',
-    A: 'tie',
+    C: 'Y',
+    B: 'X',
+    A: 'Z',
   },
   Y: {
     points: 2,
-    C: 'lose',
-    B: 'tie',
-    A: 'win',
+    C: 'Z',
+    B: 'Y',
+    A: 'X',
   },
   Z: {
     points: 3,
-    C: 'tie',
-    B: 'win',
-    A: 'lose',
+    C: 'X',
+    B: 'Z',
+    A: 'Y',
   },
 };
 
@@ -29,15 +29,19 @@ let total = 0;
 input.forEach((match) => {
   let [elfPick, myPick] = match.split(' ');
 
-  switch (key[myPick][elfPick]) {
-    case 'win':
-      total += key[myPick].points + 6;
+  let choice = key[myPick][elfPick];
+
+  console.log([elfPick, myPick, choice]);
+
+  switch (myPick) {
+    case 'Z':
+      total += key[choice].points + 6;
       break;
-    case 'tie':
-      total += key[myPick].points + 3;
+    case 'Y':
+      total += key[choice].points + 3;
       break;
-    case 'lose':
-      total += key[myPick].points + 0;
+    case 'X':
+      total += key[choice].points + 0;
       break;
   }
 });
