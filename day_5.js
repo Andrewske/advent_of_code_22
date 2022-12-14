@@ -31,7 +31,7 @@ moves.forEach((move) => {
 
   let moving = stacks[from - 1].splice(stacks[from - 1].length - quantity);
 
-  stacks[to - 1] = [...stacks[to - 1], ...moving.reverse()];
+  stacks[to - 1] = [...stacks[to - 1], ...moving];
 });
 
 console.log(stacks);
