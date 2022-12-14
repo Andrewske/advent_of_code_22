@@ -18,9 +18,9 @@ const notUnique = (letters) => {
   return false;
 };
 
-let pos = 4;
+let pos = 14;
 
-while (notUnique(input.slice(pos - 4, pos))) {
+while (notUnique(input.slice(pos - 14, pos))) {
   pos += 1;
 }
 
