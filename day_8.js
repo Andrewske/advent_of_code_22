@@ -7,7 +7,7 @@ const test = `30373
 33549
 35390`;
 
-const input = file.split(/\r?\n/);
+const input = file.split(/\r?\n/).map((row) => row.split(''));
 
 let visible = input.length * 4 - 4;
 
@@ -21,20 +21,48 @@ const checkVisible = (group, i) => {
   );
 };
 
-for (let x = 1; x < input.length - 1; x++) {
-  for (let y = 1; y < input[x].length - 1; y++) {
-    let row = input[x].split('');
-    let col = input.map((row) => row[y]);
+const viewingDistance = (group, x) => {
+  let total = 0;
 
-    if (checkVisible(row, y)) {
-      visible += 1;
-      continue;
-    }
+  group.every((el) => {
+    total += 1;
+    return el < x;
+  });
 
-    if (checkVisible(col, x)) {
-      visible += 1;
+  return total;
+};
+
+const main = () => {
+  let maxScenicScore = 0;
+
+  for (let x = 1; x < input.length - 1; x++) {
+    for (let y = 1; y < input[x].length - 1; y++) {
+      let row = input[x];
+      let col = input.map((row) => row[y]);
+      let el = input[x][y];
+
+      let left = viewingDistance(row.slice(0, y).reverse(), el);
+      let right = viewingDistance(row.slice(y + 1), el);
+      let up = viewingDistance(col.slice(0, x).reverse(), el);
+      let down = viewingDistance(col.slice(x + 1), el);
+
+      let score = left * right * up * down;
+
+      maxScenicScore = score > maxScenicScore ? score : maxScenicScore;
+
+      // Part 1
+      if (checkVisible(row, y)) {
+        visible += 1;
+        continue;
+      }
+
+      if (checkVisible(col, x)) {
+        visible += 1;
+      }
     }
   }
-}
+  return maxScenicScore;
+};
 
+console.log(main());
 console.log(visible);
